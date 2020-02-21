@@ -23,7 +23,7 @@ Look at the image size:
 
 ```bash
 $ docker images | grep my-site
-my-site   latest   a30f249e14de   3 seconds ago   15.5MB
+my-site   latest   a02c7d53f542   3 seconds ago   21.9MB
 ```
 
 ## Requirements
