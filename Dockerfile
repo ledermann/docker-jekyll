@@ -1,15 +1,10 @@
-# Build with Ruby
-FROM ruby:2.5-alpine AS Builder
-RUN apk add --update --no-cache \
-    build-base
-WORKDIR /project
-COPY Gemfile* /project/
-RUN bundle install
-COPY . /project
+# Build using preinstalled dependencies
+FROM ledermann/jekyll-base AS Builder
 RUN bundle exec jekyll build
 
 # Deploy with Nginx
 FROM nginx:stable-alpine
-LABEL maintainer="mail@georg-ledermann.de"
+LABEL maintainer="georg@ledermann.dev"
 COPY _nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=Builder /project/_site /usr/share/nginx/html
+COPY --from=Builder /app/_site /usr/share/nginx/html
+RUN nginx -t
